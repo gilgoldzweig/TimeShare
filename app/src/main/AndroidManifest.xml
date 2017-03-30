@@ -3,6 +3,7 @@
     package="cc.time_share.android">
 
     <application
+        android:name=".application.TimeShareApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
