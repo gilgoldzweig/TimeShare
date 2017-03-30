@@ -71,4 +71,15 @@ public class User {
     }
 
     //endregion setters
+
+    @Override
+    public String toString() {
+        StringBuilder toStringBuilder = new StringBuilder();
+        toStringBuilder.append("Name: ").append(name).append("\n");
+        toStringBuilder.append("Longitude: ").append(String.valueOf(longitude)).append("\n");
+        toStringBuilder.append("Latitude: ").append(String.valueOf(latitude)).append("\n");
+        toStringBuilder.append("Skills: ").append(skills).append("\n");
+        toStringBuilder.append("RequestKeys: ").append(requestKeys);
+        return toStringBuilder.toString();
+    }
 }
