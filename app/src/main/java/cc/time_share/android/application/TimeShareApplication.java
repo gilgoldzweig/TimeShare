@@ -16,12 +16,12 @@ public class TimeShareApplication extends Application {
     public void onCreate() {
         super.onCreate();
         GlobalSharedPreferences.getInstance().initialize(this);
-        CrashHandlerConfiguration configuration =
-                new CrashHandlerConfiguration.Builder(this)
-                        .setHomeActivity(MainActivity.class)
-                        .enableAppCrashHandler(true)
-                        .enableLeakCanary(true)
-                        .build();
-        CrashHandler.getInstance().init(configuration);
+//        CrashHandlerConfiguration configuration =
+//                new CrashHandlerConfiguration.Builder(this)
+//                        .setHomeActivity(MainActivity.class)
+//                        .enableAppCrashHandler(true)
+//                        .enableLeakCanary(true)
+//                        .build();
+//        CrashHandler.getInstance().init(configuration);
     }
 }
