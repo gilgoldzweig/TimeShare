@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "646761460055",
+    "firebase_url": "https://timeshare-ed48e.firebaseio.com",
+    "project_id": "timeshare-ed48e",
+    "storage_bucket": "timeshare-ed48e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:646761460055:android:03412e2d8a5c10d5",
+        "android_client_info": {
+          "package_name": "cc.time_share.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "646761460055-f5v1vbhdrc81mhc0ttr48mgrg5etaq9g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cc.time_share.android",
+            "certificate_hash": "ede8d7e93cd973ca58b42d6e3aa9f3c6e4fb34d2"
+          }
+        },
+        {
+          "client_id": "646761460055-qifb2sbram1m0c6n1g7k872e8eekvluv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6OSdB2VJyJolhCLcviMy7VNP1j1vnDeE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "646761460055-qifb2sbram1m0c6n1g7k872e8eekvluv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
