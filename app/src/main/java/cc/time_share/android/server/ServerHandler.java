@@ -1,4 +1,4 @@
-package android.time_share.cc.timeshare.server;
+package cc.time_share.android.server;
 
 
 /**

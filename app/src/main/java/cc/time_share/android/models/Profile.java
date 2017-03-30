@@ -1,4 +1,4 @@
-package android.time_share.cc.timeshare.models;
+package cc.time_share.android.models;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
