@@ -12,6 +12,7 @@ import java.util.Set;
 public class Request {
     //region Data Fields
     private String name;
+    private String profileImageUrl;
     private String title;
     private String description;
     private Double longitude;
@@ -61,6 +62,11 @@ public class Request {
     public String getKey() {
         return key;
     }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
     //endregion getters
     //region setters
     public void setName(String name) {
@@ -89,6 +95,10 @@ public class Request {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
     //endregion setters
 

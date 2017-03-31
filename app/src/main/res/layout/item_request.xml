@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_220sdp"
+    android:background="@color/divider"
+    android:paddingBottom="@dimen/_2sdp">
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardElevation="@dimen/_4sdp"
+    android:elevation="@dimen/_4sdp">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        android:id="@+id/img_request_general" />
+    <ImageView
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_24sdp"
+        android:layout_below="@id/img_request_general"
+        android:layout_margin="@dimen/_6sdp"
+        android:id="@+id/img_creator_profile"/>
+    <TextView
+        android:id="@+id/txt_creator_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:layout_below="@id/img_request_general"
+        android:layout_toRightOf="@id/img_creator_profile"
+        android:text="Gil Goldzweig"
+        android:textColor="@color/primary_text"/>
+    <TextView
+        android:id="@+id/txt_creation_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txt_creator_name"
+        android:layout_toRightOf="@id/img_creator_profile"
+        android:text="22 Hours Ago"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_8ssp"/>
+    <TextView
+        android:id="@+id/txt_description"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_below="@id/img_creator_profile"
+        android:layout_marginLeft="@dimen/_6sdp"
+        android:ellipsize="end"
+        android:text="22 Hours AgoKLxnbcz  n oj zkd voxj  v sdobj vsjd fodj vosj vojs dfojv dfvoj soj dljnndlv sjd vflak dvld vlf bcslndmv ;ds ,v lf v lkngm"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/_8ssp"/>
+    <Button
+        android:id="@+id/btn_agree_deal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/accent"
+        android:text="Help out"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
+    <Button
+        android:id="@+id/btn_more_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:textColor="@color/accent"
+        android:text="more info"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/btn_agree_deal"/>
+</RelativeLayout>
+</android.support.v7.widget.CardView>
+</LinearLayout>

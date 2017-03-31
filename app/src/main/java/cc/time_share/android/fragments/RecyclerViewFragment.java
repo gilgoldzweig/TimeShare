@@ -12,9 +12,9 @@ import cc.time_share.android.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RecyclerView extends Fragment {
+public class RecyclerViewFragment extends Fragment {
 
-    public RecyclerView() {
+    public RecyclerViewFragment() {
         // Required empty public constructor
     }
 
