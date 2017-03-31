@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -203,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             transitionName);
             startActivity(createIntent, transitionActivityOptions.toBundle());
         } else {
+//            AlertDialog signInDialog = new AlertDialog.Builder(this).
             // TODO(gil): Show dialog saying "Please update your profile to post a request."
             // with one button "OK :)". Clicking that button takes the user to ProfileActivity.
             // Inside that activity, call ServerHandler.getInstance().addUser(user).
