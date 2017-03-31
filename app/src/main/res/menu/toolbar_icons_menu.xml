@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:title="profile"
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_person_white_24dp"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/action_filter"
         android:icon="@drawable/ic_filter_list_white_24dp"
         android:title="filter"
@@ -9,11 +14,6 @@
     <item
         android:title="change view"
         android:id="@+id/action_change_view"
-        android:icon="@drawable/ic_view_list_white_24dp"
-        app:showAsAction="always"/>
-    <item
-        android:title="profile"
-        android:id="@+id/action_profile"
-        android:icon="@drawable/ic_person_white_24dp"
+        android:icon="@drawable/ic_map_white_24dp"
         app:showAsAction="always"/>
 </menu>
