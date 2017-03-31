@@ -1,5 +1,7 @@
 package cc.time_share.android.models;
 
+import android.support.annotation.NonNull;
+
 import java.util.List;
 import java.util.Set;
 
@@ -102,4 +104,5 @@ public class Request {
         stringBuilder.append("Key: ").append(key);
         return stringBuilder.toString();
     }
+
 }

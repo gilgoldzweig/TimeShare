@@ -24,6 +24,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.haha.guava.base.Joiner;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final String[] permissions = new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
     private GPSTracker mGPSTracker;
     private FirebaseRecyclerAdapter<Request, RequestHolder> mAdapter;
+    private HashMap<String, Marker> mMarkers = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,18 +103,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void subscribeListToRequests() {
         DatabaseReference requestsRef =
                 FirebaseDatabase.getInstance().getReference().child("requests");
+
         mAdapter = new FirebaseRecyclerAdapter<Request, RequestHolder>(
                 Request.class, R.layout.item_requests, RequestHolder.class, requestsRef) {
             @Override
             public void populateViewHolder(RequestHolder requestViewHolder,
                                            Request request,
                                            int position) {
+
                 requestViewHolder.mNameText.setText(request.getName());
                 requestViewHolder.mTitleText.setText(request.getTitle());
                 requestViewHolder.mDescriptionText.setText(request.getDescription());
                 requestViewHolder.mSkillsText.setText(StringUtils.join(request.getNeeds(), ", "));
             }
+
         };
+
         mRequestsRecyclerView.setHasFixedSize(false);
         mRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRequestsRecyclerView.setAdapter(mAdapter);
@@ -122,23 +130,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Request request = dataSnapshot.getValue(Request.class);
                 Log.d(TAG, "onDataChange: " + request.getTitle());
-
-                mGoogleMap.addMarker(new MarkerOptions()
+                mMarkers.put(request.getKey(), mGoogleMap.addMarker(new MarkerOptions()
                         .flat(false)
                         .title(request.getTitle())
                         .snippet(request.getDescription())
                         .position(new LatLng(request.getLatitude(),
-                                request.getLongitude())));
+                                request.getLongitude()))));
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Request request = dataSnapshot.getValue(Request.class);
+                Marker marker = mMarkers.get(request.getKey());
+                marker.setTitle(request.getTitle());
+                marker.setSnippet(request.getDescription());
+                marker.setPosition(new LatLng(request.getLatitude(), request.getLongitude()));
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                Request request = dataSnapshot.getValue(Request.class);
+                mMarkers.remove(request.getKey()).remove();
             }
 
             @Override
