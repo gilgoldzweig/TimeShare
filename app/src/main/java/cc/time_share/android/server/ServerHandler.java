@@ -108,7 +108,7 @@ public class ServerHandler {
 
     public void addRequest(Request request) {
         String key = mDatabase.child("requests").push().getKey();
-        mDatabase.child("users").child(key).setValue(request);
+        request.setKey(key);
         mDatabase.child("requests").child(key).setValue(request);
     }
 }
