@@ -1,9 +1,8 @@
 package cc.time_share.android.server;
 
 
-import android.databinding.ViewDataBinding;
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
@@ -12,12 +11,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import cc.time_share.android.models.Request;
-import cc.time_share.android.models.Store;
 import cc.time_share.android.models.User;
+import io.kimo.lib.faker.Faker;
+import io.kimo.lib.faker.api.LoremAPI;
+import io.kimo.lib.faker.component.text.AddressComponent;
+import io.kimo.lib.faker.component.text.LoremComponent;
+import io.kimo.lib.faker.component.text.URLComponent;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
@@ -29,15 +34,12 @@ public class ServerHandler {
 
     private DatabaseReference mDatabase;
 
-    private Store store;
-
     public static ServerHandler getInstance() {
         return ourInstance;
     }
 
     private ServerHandler() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        store = new Store();
     }
 
     public void pushDemoDataToServer() {
@@ -45,19 +47,29 @@ public class ServerHandler {
         gil.setName("Goldsquared");
         mDatabase.child("users").child("gilId").setValue(gil);
     }
-
-    @NonNull
-    public Store getStore() {
-        return store;
+    public void setSkills() {
+        mDatabase.child("Skills").setValue(skills());
     }
-
+    public void addRequests(Context context) {
+        LoremComponent loremComponent = new LoremComponent(context);
+        AddressComponent addressComponent = new AddressComponent(context);
+        URLComponent urlComponent = new URLComponent(context);
+        List<Request> requests = new ArrayList<>();
+        for (int i = 0; i < 37; i++) {
+            String randomKey = mDatabase.push().getKey();
+            requests.add(new Request(
+                    loremComponent.sentences(1),
+                    loremComponent.paragraphs(),
+                    Double.parseDouble(addressComponent.longitude()),
+                    Double.parseDouble(addressComponent.latitude()),skills(),randomKey));
+        }
+        mDatabase.child("Requests").setValue(requests);
+    }
     public void subscribeToUserFromServer() {
         ValueEventListener userListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Get Post object and use the values to update the UI
-                store.user.set(dataSnapshot.getValue(User.class));
-                // ...
             }
 
             @Override
@@ -69,5 +81,27 @@ public class ServerHandler {
         };
         DatabaseReference mUserReference = mDatabase.child("users").child("gilId");
         mUserReference.addValueEventListener(userListener);
+    }
+
+    public List<String> skills() {
+        List<String> skills = new ArrayList<>();
+        skills.add("Arts");
+        skills.add("Design");
+        skills.add("Building");
+        skills.add("Rides");
+        skills.add("Coding");
+        skills.add("Language");
+        skills.add("Math");
+        skills.add("UX");
+        skills.add("UI");
+        skills.add("Cleaning");
+        skills.add("Cooking");
+        skills.add("Baking");
+        return skills;
+    }
+
+    public void setRequestListener(ValueEventListener valueEventListener) {
+        DatabaseReference mUserReference = mDatabase.child("Requests");
+        mUserReference.addValueEventListener(valueEventListener);
     }
 }

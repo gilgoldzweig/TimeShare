@@ -1,25 +1,29 @@
 package cc.time_share.android.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
  */
 
-public class Request {
+public class Request extends BaseObservable{
     //region Data Fields
     private String title;
     private String description;
     private Double longitude;
     private Double latitude;
-    private Set<String> needs;
+    private List<String> needs;
     private String key;
     //endregion Data Fields
     //region Constructor
     public Request() {}
 
     public Request(String title, String description, Double longitude, Double latitude,
-                   Set<String> needs, String key) {
+                   List<String> needs, String key) {
         this.title = title;
         this.description = description;
         this.longitude = longitude;
@@ -45,7 +49,7 @@ public class Request {
         return latitude;
     }
 
-    public Set<String> getNeeds() {
+    public List<String> getNeeds() {
         return needs;
     }
 
@@ -70,7 +74,7 @@ public class Request {
         this.latitude = latitude;
     }
 
-    public void setNeeds(Set<String> needs) {
+    public void setNeeds(List<String> needs) {
         this.needs = needs;
     }
 
