@@ -12,6 +12,7 @@ import com.adroitandroid.chipcloud.ChipListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -34,14 +35,26 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User mUser;
     private GPSTracker mGpsTracker;
-    private List<String> mSkillsArray = new ArrayList<>();
-    private String[] mSkills;
+    private HashSet<String> mSkillsSet = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         mGpsTracker = new GPSTracker(this);
+        configureChips();
+
+        User user = ServerHandler.getInstance().getUser();
+        if (user != null) {
+            mNameEditText.setText(user.getName());
+            mPhoneNumberEditText.setText(user.getPhoneNumber());
+            mSkillsSet.addAll(user.getSkills());
+            // TODO(gil): How to make chips that are in mSkillsSet selected in the UI?
+            // Do we use mChipCloud.setSelectedChip()?
+        }
+    }
+
+    private void configureChips() {
         new ChipCloud.Configure()
                 .chipCloud(mChipCloud)
                 .selectedColor(Color.parseColor("#ff00cc"))
@@ -60,25 +73,27 @@ public class ProfileActivity extends AppCompatActivity {
                 .chipListener(new ChipListener() {
                     @Override
                     public void chipSelected(int index) {
-                        mSkillsArray.add(getResources().getStringArray(R.array.skills)[index]);
+                        mSkillsSet.add(getResources().getStringArray(R.array.skills)[index]);
                         //...
                     }
                     @Override
                     public void chipDeselected(int index) {
-                        mSkillsArray.remove(getResources().getStringArray(R.array.skills)[index]);
+                        mSkillsSet.remove(getResources().getStringArray(R.array.skills)[index]);
                         //...
                     }
                 })
                 .build();
     }
+
     @OnClick(R.id.fab_save_profile)
     public void saveProfile(View v) {
-        mUser = new User();
-        mUser.setName(mNameEditText.getText().toString().trim());
-        mUser.setPhoneNumber(mPhoneNumberEditText.getText().toString().trim());
-        mUser.setLatitude(mGpsTracker.getLatitude());
-        mUser.setLongitude(mGpsTracker.getLongitude());
-        mUser.setSkillsArray(mSkillsArray);
+        mUser = new User(
+                mNameEditText.getText().toString().trim(),
+                mPhoneNumberEditText.getText().toString().trim(),
+                (float) mGpsTracker.getLatitude(),
+                (float) mGpsTracker.getLongitude(),
+                mSkillsSet,
+                null);
         ServerHandler.getInstance().addUser(mUser);
         finish();
     }

@@ -13,8 +13,8 @@ public class User {
     private String key;
     private String name;
     private String phoneNumber;
-    private Double longitude;
-    private Double latitude;
+    private Float longitude;
+    private Float latitude;
     private Set<String> skills;
     private List<String> skillsArray;
     private Set<String> requestKeys;
@@ -22,9 +22,10 @@ public class User {
     //region Constructor
     public User() {}
 
-    public User(String name, Double longitude, Double latitude, Set<String> skills,
-                Set<String> requestKeys) {
+    public User(String name, String phoneNumber, Float longitude, Float latitude,
+                Set<String> skills, Set<String> requestKeys) {
         this.name = name;
+        this.phoneNumber = phoneNumber;
         this.longitude = longitude;
         this.latitude = latitude;
         this.skills = skills;
@@ -42,11 +43,15 @@ public class User {
         return name;
     }
 
-    public Double getLongitude() {
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Float getLongitude() {
         return longitude;
     }
 
-    public Double getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
@@ -56,10 +61,6 @@ public class User {
 
     public Set<String> getRequestKeys() {
         return requestKeys;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
     }
 
     public List<String> getSkillsArray() {
@@ -76,11 +77,15 @@ public class User {
         this.name = name;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 
@@ -90,10 +95,6 @@ public class User {
 
     public void setRequestKeys(Set<String> requestKeys) {
         this.requestKeys = requestKeys;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public void setSkillsArray(List<String> skillsArray) {
