@@ -102,6 +102,10 @@ public class ServerHandler {
         mDatabase.child("requests").child(key).setValue(request);
     }
 
+    public void deleteRequest(String requestKey) {
+        mDatabase.child("requests").child(requestKey).setValue(null);
+    }
+
     public void addUser(User user) {
         String key =
                 globalSharedPreferences.contains(SharedPrefKeys.USER_KEY) ?
