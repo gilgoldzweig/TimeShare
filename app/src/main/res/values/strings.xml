@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TimeShare</string>
+    <string name="fab_to_toolbar">fab_to_toolbar</string>
 </resources>
