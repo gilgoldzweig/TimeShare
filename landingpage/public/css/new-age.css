@@ -34,8 +34,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';
-  font-weight: 200;
+  /*font-family: 'Catamaran', 'Helvetica', 'Arial', 'sans-serif';*/
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
   letter-spacing: 1px; }
 
 p {
@@ -119,6 +120,12 @@ header {
   background: url("../img/bg-pattern.png"), -webkit-linear-gradient(to left, #7b4397, #dc2430);
   /* Chrome 10-25, Safari 5.1-6 */
   background: url("../img/bg-pattern.png"), linear-gradient(to left, #7b4397, #dc2430);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #692573;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top left, #692573, #692573, #d55, #fff);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top left, #692573, #692573, #d55, #fff);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: white; }
   header .header-content {

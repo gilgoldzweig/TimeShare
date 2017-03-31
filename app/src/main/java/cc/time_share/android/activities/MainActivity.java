@@ -3,6 +3,7 @@ package cc.time_share.android.activities;
 import static android.Manifest.permission.*;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -73,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        startActivity(new Intent(this, ProfileActivity.class));
         mToolBar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolBar);
         mMapFragment = (MapFragment) getFragmentManager()
@@ -195,22 +195,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick(R.id.fab_create)
     public void createFabAction(View view) {
-        Intent createIntent = new Intent(MainActivity.this, CreateActivity.class);
+        if (GlobalSharedPreferences.getInstance().contains("userKey")) {  // Registered user.
+            Intent createIntent = new Intent(MainActivity.this, CreateActivity.class);
 
-        String transitionName = getString(R.string.fab_to_toolbar);
+            String transitionName = getString(R.string.fab_to_toolbar);
 
-        ActivityOptions transitionActivityOptions =
-                ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, mCreateFab,
-                        transitionName);
-        startActivity(createIntent, transitionActivityOptions.toBundle());
-//        if (GlobalSharedPreferences.getInstance().contains("userKey")) {  // Registered user.
-//
-//        } else {
-////            AlertDialog signInDialog = new AlertDialog.Builder(this).
-//            // TODO(gil): Show dialog saying "Please update your profile to post a request."
-//            // with one button "OK :)". Clicking that button takes the user to ProfileActivity.
-//            // Inside that activity, call ServerHandler.getInstance().addUser(user).
-//        }
+            ActivityOptions transitionActivityOptions =
+                    ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, mCreateFab,
+                            transitionName);
+            startActivity(createIntent, transitionActivityOptions.toBundle());
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("Update profile")
+                    .setMessage("Please update your profile to post a request.")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                            startActivity(profileIntent);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 
     @Override

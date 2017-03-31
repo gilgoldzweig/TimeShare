@@ -100,7 +100,10 @@ public class ServerHandler {
     }
 
     public void addUser(User user) {
-        String key = mDatabase.child("users").push().getKey();
+        String key =
+                GlobalSharedPreferences.getInstance().contains("userKey") ?
+                GlobalSharedPreferences.getInstance().getString("userKey") :
+                mDatabase.child("users").push().getKey();
         user.setKey(key);
         mDatabase.child("users").child(key).setValue(user);
         GlobalSharedPreferences.getInstance()
