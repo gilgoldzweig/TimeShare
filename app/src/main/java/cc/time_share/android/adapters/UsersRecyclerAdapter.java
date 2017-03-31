@@ -35,6 +35,7 @@
 //
 //    @Override
 //    public void onBindViewHolder(GenericViewHolder holder, int position) {
+// holder
 //        T obj = objects.get(position);
 //        ViewDataBinding viewDataBinding = holder.getViewDataBinding();
 //        viewDataBinding.setVariable(variableID, obj);

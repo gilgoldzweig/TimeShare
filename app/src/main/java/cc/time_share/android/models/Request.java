@@ -1,7 +1,5 @@
 package cc.time_share.android.models;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 
 import java.util.List;
 import java.util.Set;
@@ -10,7 +8,7 @@ import java.util.Set;
  * Created by gilgoldzweig on 30/03/2017.
  */
 
-public class Request extends BaseObservable{
+public class Request{
     //region Data Fields
     private String title;
     private String description;

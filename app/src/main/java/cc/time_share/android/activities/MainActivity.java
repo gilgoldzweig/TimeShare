@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -69,9 +71,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(mToolBar);
         mMapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragmentView);
-        mServerHandler = ServerHandler.getInstance();
-        mServerHandler.setRequestListener(this);
-
+//        mServerHandler = ServerHandler.getInstance();
+//        mServerHandler.setRequestListener(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, PERMISSION_KEY);
         }
