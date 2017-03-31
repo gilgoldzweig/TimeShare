@@ -49,7 +49,7 @@ public class ServerHandler {
         mDatabase.child("users").child("gilId").setValue(gil);
     }
     public void setSkills() {
-        mDatabase.child("Skills").setValue(skills());
+        mDatabase.child("skills").setValue(skills());
     }
     public void addRequests(Context context) {
         LoremComponent loremComponent = new LoremComponent(context);
@@ -64,7 +64,7 @@ public class ServerHandler {
                     Double.parseDouble(addressComponent.longitude()),
                     Double.parseDouble(addressComponent.latitude()),skills(),randomKey));
         }
-        mDatabase.child("Requests").setValue(requests);
+        mDatabase.child("requests").setValue(requests);
     }
     public void subscribeToUserFromServer() {
         ValueEventListener userListener = new ValueEventListener() {
@@ -104,5 +104,11 @@ public class ServerHandler {
     public void setRequestsListener(ChildEventListener childEventListener) {
         DatabaseReference requestsRef = mDatabase.child("Requests");
         requestsRef.addChildEventListener(childEventListener);
+    }
+
+    public void addRequest(Request request) {
+        String key = mDatabase.child("requests").push().getKey();
+        mDatabase.child("users").child(key).setValue(request);
+        mDatabase.child("requests").child(key).setValue(request);
     }
 }
