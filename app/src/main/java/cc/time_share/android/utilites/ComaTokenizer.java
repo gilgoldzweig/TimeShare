@@ -2,6 +2,7 @@ package cc.time_share.android.utilites;
 
 import android.graphics.Color;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
@@ -47,13 +48,17 @@ public class ComaTokenizer implements MultiAutoCompleteTextView.Tokenizer {
         if (i > 0 && text.charAt(i - 1) == ' ') {
             return text;
         } else {
-            SpannableString sp = new SpannableString(text);
-            sp.setSpan(new ForegroundColorSpan(Color.RED), 0,
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
+            SpannableString spannableString = new SpannableString(text);
+            spannableString.setSpan(new ForegroundColorSpan(Color.RED), 0,
                     text.length(), 0);
+            spannableStringBuilder.append(spannableString);
+            spannableStringBuilder.append(", ");
+
 
 //                TextUtils.copySpansFrom((Spanned) text, 0, text.length(),
 //                        Object.class, sp, 0);
-            return sp + ", ";
+            return spannableStringBuilder.toString();
         }
     }
 }
