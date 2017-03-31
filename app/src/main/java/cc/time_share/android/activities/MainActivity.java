@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -32,8 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.haha.guava.base.Joiner;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.StringJoiner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mServerHandler = ServerHandler.getInstance();
 
         subscribeListToRequests();
-        subscribeMapToRequests();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, PERMISSION_KEY);
@@ -90,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(mGPSTracker.getLatitude(),
                         mGPSTracker.getLongitude()), 18));
+        subscribeMapToRequests();
     }
 
     @Override
@@ -112,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 requestViewHolder.mSkillsText.setText(StringUtils.join(request.getNeeds(), ", "));
             }
         };
+        mRequestsRecyclerView.setHasFixedSize(false);
+        mRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRequestsRecyclerView.setAdapter(mAdapter);
     }
 

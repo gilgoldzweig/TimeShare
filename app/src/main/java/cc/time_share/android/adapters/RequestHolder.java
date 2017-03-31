@@ -25,6 +25,6 @@ public class RequestHolder extends RecyclerView.ViewHolder {
 
     public RequestHolder(View itemView) {
         super(itemView);
-        ButterKnife.bind(itemView);
+        ButterKnife.bind(this, itemView);
     }
 }

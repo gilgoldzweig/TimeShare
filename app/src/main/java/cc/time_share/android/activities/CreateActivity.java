@@ -154,7 +154,7 @@ public class CreateActivity extends AppCompatActivity {
         skillsNeeded.addAll(Arrays.asList(mSkillsEditText.getText().toString().split(", ")));
         GPSTracker gpsTracker = new GPSTracker(this);
         ServerHandler.getInstance().addRequest(
-                new Request(mTitleEditText.getText().toString(),
+                new Request("Gil", mTitleEditText.getText().toString(),
                         mDescriptionEditText.getText().toString()
                         ,gpsTracker.getLongitude(),
                         gpsTracker.getLatitude(), skillsNeeded, "djdjdj"));

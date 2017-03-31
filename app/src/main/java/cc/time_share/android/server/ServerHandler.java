@@ -59,6 +59,7 @@ public class ServerHandler {
         for (int i = 0; i < 37; i++) {
             String randomKey = mDatabase.push().getKey();
             requests.add(new Request(
+                    "Gil",
                     loremComponent.sentences(1),
                     loremComponent.paragraphs(),
                     Double.parseDouble(addressComponent.longitude()),
@@ -108,10 +109,7 @@ public class ServerHandler {
 
     public void addRequest(Request request) {
         String key = mDatabase.child("requests").push().getKey();
-<<<<<<< HEAD
-=======
         request.setKey(key);
->>>>>>> 6355b7677b0aee5a816b4922cdf09c6b6b1caec7
         mDatabase.child("requests").child(key).setValue(request);
     }
 }
