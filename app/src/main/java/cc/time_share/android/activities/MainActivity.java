@@ -11,8 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -47,8 +45,7 @@ import cc.time_share.android.models.Request;
 import cc.time_share.android.server.ServerHandler;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback,
-        ValueEventListener, ChildEventListener {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = MainActivity.class.getSimpleName();
     private ServerHandler mServerHandler;
     @BindView(R.id.toolbar_main)
@@ -71,8 +68,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         setSupportActionBar(mToolBar);
         mMapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragmentView);
-//        mServerHandler = ServerHandler.getInstance();
-//        mServerHandler.setRequestListener(this);
+        mServerHandler = ServerHandler.getInstance();
+
+        subscribeToRequests();
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permissions, PERMISSION_KEY);
         }
@@ -93,46 +92,41 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    @Override
-    public void onDataChange(DataSnapshot dataSnapshots) {
+    private void subscribeToRequests() {
+        mServerHandler.setRequestsListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Request request = dataSnapshot.getValue(Request.class);
+                Log.d(TAG, "onDataChange: " + request.getTitle());
 
-        for (DataSnapshot dataSnapshot : dataSnapshots.getChildren()) {
-            Request request = dataSnapshot.getValue(Request.class);
-            Log.d(TAG, "onDataChange: " + request.getTitle());
+                mGoogleMap.addMarker(new MarkerOptions()
+                        .flat(false)
+                        .title(request.getTitle())
+                        .snippet(request.getDescription())
+                        .position(new LatLng(request.getLatitude(),
+                                request.getLongitude())));
+            }
 
-            mGoogleMap.addMarker(new MarkerOptions()
-                    .flat(false)
-                    .title(request.getTitle())
-                    .snippet(request.getDescription())
-                    .position(new LatLng(request.getLatitude(),
-                            request.getLongitude())));
-        }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-    }
+            }
 
-    @Override
-    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-    }
+            }
 
-    @Override
-    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-    }
+            }
 
-    @Override
-    public void onChildRemoved(DataSnapshot dataSnapshot) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-    }
-
-    @Override
-    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
+            }
+        });
     }
 
     @Override
@@ -159,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return super.onOptionsItemSelected(item);
     }
+
     @OnClick(R.id.fab_create)
     public void createFabAction(View view) {
         Intent createIntent = new Intent(MainActivity.this, CreateActivity.class);

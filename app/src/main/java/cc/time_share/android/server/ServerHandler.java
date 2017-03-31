@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -100,8 +101,8 @@ public class ServerHandler {
         return skills;
     }
 
-    public void setRequestListener(ValueEventListener valueEventListener) {
-        DatabaseReference mUserReference = mDatabase.child("Requests");
-        mUserReference.addValueEventListener(valueEventListener);
+    public void setRequestsListener(ChildEventListener childEventListener) {
+        DatabaseReference requestsRef = mDatabase.child("Requests");
+        requestsRef.addChildEventListener(childEventListener);
     }
 }
