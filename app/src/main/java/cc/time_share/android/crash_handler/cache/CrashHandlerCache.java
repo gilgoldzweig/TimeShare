@@ -16,7 +16,7 @@ public final class CrashHandlerCache {
     private static final String LAST_CRASH_DATE = "LAST_CRASH_DATE";
 
     public static void setLastCrashDate(long date) {
-     globalSharedPreferences.put(LAST_CRASH_DATE, date).commit();
+        globalSharedPreferences.edit().putLong(LAST_CRASH_DATE, date).apply();
     }
 
     public static long getLastCrashDate() {

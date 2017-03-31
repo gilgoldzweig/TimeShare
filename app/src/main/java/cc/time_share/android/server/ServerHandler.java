@@ -20,6 +20,7 @@ import java.util.Set;
 import cc.time_share.android.models.Request;
 import cc.time_share.android.models.User;
 import cc.time_share.android.utilites.GlobalSharedPreferences;
+import cc.time_share.android.utilites.SharedPrefKeys;
 import io.kimo.lib.faker.Faker;
 import io.kimo.lib.faker.api.LoremAPI;
 import io.kimo.lib.faker.component.text.AddressComponent;
@@ -35,6 +36,7 @@ public class ServerHandler {
     private static final String TAG = ServerHandler.class.getSimpleName();
 
     private DatabaseReference mDatabase;
+    private GlobalSharedPreferences globalSharedPreferences;
 
     public static ServerHandler getInstance() {
         return ourInstance;
@@ -42,6 +44,7 @@ public class ServerHandler {
 
     private ServerHandler() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        globalSharedPreferences = GlobalSharedPreferences.getInstance();
     }
 
     public void pushDemoDataToServer() {
@@ -101,14 +104,15 @@ public class ServerHandler {
 
     public void addUser(User user) {
         String key =
-                GlobalSharedPreferences.getInstance().contains("userKey") ?
-                GlobalSharedPreferences.getInstance().getString("userKey") :
+                globalSharedPreferences.contains(SharedPrefKeys.USER_KEY) ?
+                globalSharedPreferences.getString(SharedPrefKeys.USER_KEY) :
                 mDatabase.child("users").push().getKey();
         user.setKey(key);
         mDatabase.child("users").child(key).setValue(user);
-        GlobalSharedPreferences.getInstance()
-                .put("userKey", key)
-                .put("userName", user.getName())
-                .commit();
+        globalSharedPreferences
+                .edit()
+                .putString(SharedPrefKeys.USER_KEY, key)
+                .putString(SharedPrefKeys.NAME_KEY, user.getName())
+                .apply();
     }
 }
