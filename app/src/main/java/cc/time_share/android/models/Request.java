@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class Request {
     //region Data Fields
+    private String name;
     private String title;
     private String description;
     private Double longitude;
@@ -19,8 +20,9 @@ public class Request {
     //region Constructor
     public Request() {}
 
-    public Request(String title, String description, Double longitude, Double latitude,
+    public Request(String name, String title, String description, Double longitude, Double latitude,
                    List<String> needs, String key) {
+        this.name = name;
         this.title = title;
         this.description = description;
         this.longitude = longitude;
@@ -30,6 +32,10 @@ public class Request {
     }
     //endregion Constructor
     //region getters
+    public String getName() {
+        return name;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -55,6 +61,10 @@ public class Request {
     }
     //endregion getters
     //region setters
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -83,6 +93,7 @@ public class Request {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Name: ").append(name).append("\n");
         stringBuilder.append("Title: ").append(title).append("\n");
         stringBuilder.append("Description: ").append(description).append("\n");
         stringBuilder.append("Longitude: ").append(String.valueOf(longitude)).append("\n");

@@ -102,13 +102,12 @@ public class ServerHandler {
     }
 
     public void setRequestsListener(ChildEventListener childEventListener) {
-        DatabaseReference requestsRef = mDatabase.child("Requests");
+        DatabaseReference requestsRef = mDatabase.child("requests");
         requestsRef.addChildEventListener(childEventListener);
     }
 
     public void addRequest(Request request) {
         String key = mDatabase.child("requests").push().getKey();
-        mDatabase.child("users").child(key).setValue(request);
         mDatabase.child("requests").child(key).setValue(request);
     }
 }
