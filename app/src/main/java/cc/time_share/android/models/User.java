@@ -9,6 +9,7 @@ import java.util.Set;
 
 public class User {
     //region Data Fields
+    private String key;
     private String name;
     private Double longitude;
     private Double latitude;
@@ -16,7 +17,8 @@ public class User {
     private Set<String> requestKeys;
     //endregion Data Fields
     //region Constructor
-    public User(){}
+    public User() {}
+
     public User(String name, Double longitude, Double latitude, Set<String> skills,
                 Set<String> requestKeys) {
         this.name = name;
@@ -27,6 +29,10 @@ public class User {
     }
     //endregion Constructor
     //region getters
+
+    public String getKey() {
+        return key;
+    }
 
     public String getName() {
         return name;
@@ -50,6 +56,10 @@ public class User {
 
     //endregion getters
     //region setters
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public void setName(String name) {
         this.name = name;

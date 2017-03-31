@@ -45,6 +45,7 @@ import cc.time_share.android.adapters.RequestHolder;
 import cc.time_share.android.location.GPSTracker;
 import cc.time_share.android.models.Request;
 import cc.time_share.android.server.ServerHandler;
+import cc.time_share.android.utilites.GlobalSharedPreferences;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -192,13 +193,20 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @OnClick(R.id.fab_create)
     public void createFabAction(View view) {
-        Intent createIntent = new Intent(MainActivity.this, CreateActivity.class);
+        if (GlobalSharedPreferences.getInstance().contains("userKey")) {  // Registered user.
+            Intent createIntent = new Intent(MainActivity.this, CreateActivity.class);
 
-        String transitionName = getString(R.string.fab_to_toolbar);
+            String transitionName = getString(R.string.fab_to_toolbar);
 
-        ActivityOptions transitionActivityOptions =
-                ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, mCreateFab, transitionName);
-        startActivity(createIntent, transitionActivityOptions.toBundle());
+            ActivityOptions transitionActivityOptions =
+                    ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, mCreateFab,
+                            transitionName);
+            startActivity(createIntent, transitionActivityOptions.toBundle());
+        } else {
+            // TODO(gil): Show dialog saying "Please update your profile to post a request."
+            // with one button "OK :)". Clicking that button takes the user to ProfileActivity.
+            // Inside that activity, call ServerHandler.getInstance().addUser(user).
+        }
     }
 
     @Override

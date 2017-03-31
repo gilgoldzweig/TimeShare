@@ -19,6 +19,7 @@ import java.util.Set;
 
 import cc.time_share.android.models.Request;
 import cc.time_share.android.models.User;
+import cc.time_share.android.utilites.GlobalSharedPreferences;
 import io.kimo.lib.faker.Faker;
 import io.kimo.lib.faker.api.LoremAPI;
 import io.kimo.lib.faker.component.text.AddressComponent;
@@ -51,22 +52,7 @@ public class ServerHandler {
     public void setSkills() {
         mDatabase.child("skills").setValue(skills());
     }
-    public void addRequests(Context context) {
-        LoremComponent loremComponent = new LoremComponent(context);
-        AddressComponent addressComponent = new AddressComponent(context);
-        URLComponent urlComponent = new URLComponent(context);
-        List<Request> requests = new ArrayList<>();
-        for (int i = 0; i < 37; i++) {
-            String randomKey = mDatabase.push().getKey();
-            requests.add(new Request(
-                    "Gil",
-                    loremComponent.sentences(1),
-                    loremComponent.paragraphs(),
-                    Double.parseDouble(addressComponent.longitude()),
-                    Double.parseDouble(addressComponent.latitude()),skills(),randomKey));
-        }
-        mDatabase.child("requests").setValue(requests);
-    }
+
     public void subscribeToUserFromServer() {
         ValueEventListener userListener = new ValueEventListener() {
             @Override
@@ -111,5 +97,15 @@ public class ServerHandler {
         String key = mDatabase.child("requests").push().getKey();
         request.setKey(key);
         mDatabase.child("requests").child(key).setValue(request);
+    }
+
+    public void addUser(User user) {
+        String key = mDatabase.child("users").push().getKey();
+        user.setKey(key);
+        mDatabase.child("users").child(key).setValue(user);
+        GlobalSharedPreferences.getInstance()
+                .put("userKey", key)
+                .put("userName", user.getName())
+                .commit();
     }
 }
