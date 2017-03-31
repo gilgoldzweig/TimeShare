@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cc.time_share.android.activities.Home">
+    tools:context="cc.time_share.android.activities.HomeActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
@@ -17,10 +17,14 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar_home"/>
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_create_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabSize="normal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_16sdp"
+        android:src="@drawable/ic_add_white_24dp"
+        />
 </RelativeLayout>
