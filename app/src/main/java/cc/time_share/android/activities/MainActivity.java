@@ -3,6 +3,7 @@ package cc.time_share.android.activities;
 import static android.Manifest.permission.*;
 
 import android.app.ActivityOptions;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -204,10 +205,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             transitionName);
             startActivity(createIntent, transitionActivityOptions.toBundle());
         } else {
-//            AlertDialog signInDialog = new AlertDialog.Builder(this).
-            // TODO(gil): Show dialog saying "Please update your profile to post a request."
-            // with one button "OK :)". Clicking that button takes the user to ProfileActivity.
-            // Inside that activity, call ServerHandler.getInstance().addUser(user).
+            new AlertDialog.Builder(this)
+                    .setTitle("Update profile")
+                    .setMessage("Please update your profile to post a request.")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                            startActivity(profileIntent);
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
         }
     }
 
