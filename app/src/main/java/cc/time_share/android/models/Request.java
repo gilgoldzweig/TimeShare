@@ -79,16 +79,15 @@ public class Request {
     }
     //endregion setters
 
-
     @Override
     public String toString() {
-        StringBuilder toStringBuilder = new StringBuilder();
-        toStringBuilder.append("Title: ").append(title).append("\n");
-        toStringBuilder.append("Description: ").append(description).append("\n");
-        toStringBuilder.append("Longitude: ").append(String.valueOf(longitude)).append("\n");
-        toStringBuilder.append("Latitude: ").append(String.valueOf(latitude)).append("\n");
-        toStringBuilder.append("Needs: ").append(needs).append("\n");
-        toStringBuilder.append("Key: ").append(key);
-        return toStringBuilder.toString();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Title: ").append(title).append("\n");
+        stringBuilder.append("Description: ").append(description).append("\n");
+        stringBuilder.append("Longitude: ").append(String.valueOf(longitude)).append("\n");
+        stringBuilder.append("Latitude: ").append(String.valueOf(latitude)).append("\n");
+        stringBuilder.append("Needs: ").append(needs).append("\n");
+        stringBuilder.append("Key: ").append(key);
+        return stringBuilder.toString();
     }
 }

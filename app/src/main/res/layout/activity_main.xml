@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <variable name="user" type="cc.time_share.android.models.User"/>
+        <variable name="store" type="cc.time_share.android.models.Store"/>
     </data>
     <RelativeLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,6 +12,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{user.name}"/>
+            android:text="@{store.user.name}"/>
     </RelativeLayout>
 </layout>
