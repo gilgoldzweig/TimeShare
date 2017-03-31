@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:chipcloud="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="cc.time_share.android.activities.ProfileActivity">
-
-</android.support.constraint.ConstraintLayout>
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="cc.time_share.android.activities.ProfileActivity">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/name_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_material"
+            android:elevation="@dimen/_4sdp">
+            <EditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:inputType="textPersonName"
+                android:hint="Full name"
+                android:drawableStart="@drawable/ic_person_black_24dp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingRight="@dimen/_6sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:background="@drawable/edit_text_material"
+                android:layout_marginBottom="@dimen/_4sdp"/>
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/phone_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_create"
+            android:background="@drawable/edit_text_material"
+            android:elevation="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_4sdp">
+            <EditText
+                android:id="@+id/edt_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:inputType="phone"
+                android:hint="Phone number"
+                android:drawableStart="@drawable/ic_phone_black_24dp"
+                android:drawablePadding="@dimen/_10sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                android:paddingStart="@dimen/_6sdp"
+                android:paddingRight="@dimen/_6sdp"
+                android:paddingEnd="@dimen/_6sdp"
+                android:background="@drawable/edit_text_material" />
+        </android.support.design.widget.TextInputLayout>
+        <com.adroitandroid.chipcloud.ChipCloud
+            android:id="@+id/chip_cloud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_save_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="normal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/_16sdp"
+        android:src="@drawable/ic_done_white_24dp"/>
+</RelativeLayout>

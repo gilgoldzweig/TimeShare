@@ -1,4 +1,31 @@
 <resources>
-    <string name="app_name">TimeShare</string>
-    <string name="fab_to_toolbar">fab_to_toolbar</string>
+        <string name="app_name">TimeShare</string>
+        <string name="fab_to_toolbar">fab_to_toolbar</string>
+        <string name="your_skills">What\'s your skills</string>
+        <string-array name="skills">
+                <item>Cook</item>
+                <item>Fix</item>
+                <item>Construct</item>
+                <item>Tutor</item>
+                <item>Security</item>
+                <item>Computers</item>
+                <item>Deliver</item>
+                <item>Legal</item>
+                <item>Other</item>
+                <item>Dishes</item>
+                <item>Sell</item>
+                <item>Buy</item>
+                <item>Pickup</item>
+                <item>Paint</item>
+                <item>Car Ride</item>
+                <item>Laundry</item>
+                <item>Yard Work</item>
+                <item>Dog walk</item>
+                <item>Babysit</item>
+                <item>Code</item>
+                <item>Teach Math</item>
+                <item>Teach Language</item>
+                <item>Teach Sports</item>
+                <item>Motivate Working out</item>
+        </string-array>
 </resources>

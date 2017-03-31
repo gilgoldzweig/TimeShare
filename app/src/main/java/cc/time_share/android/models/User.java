@@ -1,6 +1,7 @@
 package cc.time_share.android.models;
 
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,9 +12,11 @@ public class User {
     //region Data Fields
     private String key;
     private String name;
+    private String phoneNumber;
     private Double longitude;
     private Double latitude;
     private Set<String> skills;
+    private List<String> skillsArray;
     private Set<String> requestKeys;
     //endregion Data Fields
     //region Constructor
@@ -27,6 +30,7 @@ public class User {
         this.skills = skills;
         this.requestKeys = requestKeys;
     }
+
     //endregion Constructor
     //region getters
 
@@ -54,6 +58,13 @@ public class User {
         return requestKeys;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public List<String> getSkillsArray() {
+        return skillsArray;
+    }
     //endregion getters
     //region setters
 
@@ -81,6 +92,13 @@ public class User {
         this.requestKeys = requestKeys;
     }
 
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setSkillsArray(List<String> skillsArray) {
+        this.skillsArray = skillsArray;
+    }
     //endregion setters
 
     @Override
