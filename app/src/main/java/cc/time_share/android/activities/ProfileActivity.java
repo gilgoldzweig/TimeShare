@@ -80,6 +80,6 @@ public class ProfileActivity extends AppCompatActivity {
         mUser.setLongitude(mGpsTracker.getLongitude());
         mUser.setSkillsArray(mSkillsArray);
         ServerHandler.getInstance().addUser(mUser);
-        finishActivity(0);
+        finish();
     }
 }
