@@ -179,11 +179,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 break;
             case R.id.action_change_view:
                 if (mRequestsRecyclerView.getVisibility() == View.VISIBLE) {
-                    item.setIcon(R.drawable.ic_map_white_24dp);
                     mRequestsRecyclerView.setVisibility(View.INVISIBLE);
-                } else {
                     item.setIcon(R.drawable.ic_view_list_white_24dp);
+                } else {
                     mRequestsRecyclerView.setVisibility(View.VISIBLE);
+                    item.setIcon(R.drawable.ic_map_white_24dp);
                 }
                 break;
         }
