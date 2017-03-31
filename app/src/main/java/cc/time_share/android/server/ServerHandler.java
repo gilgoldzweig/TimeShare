@@ -108,6 +108,10 @@ public class ServerHandler {
 
     public void addRequest(Request request) {
         String key = mDatabase.child("requests").push().getKey();
+<<<<<<< HEAD
+=======
+        request.setKey(key);
+>>>>>>> 6355b7677b0aee5a816b4922cdf09c6b6b1caec7
         mDatabase.child("requests").child(key).setValue(request);
     }
 }

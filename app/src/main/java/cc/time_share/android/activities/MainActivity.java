@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         DatabaseReference requestsRef =
                 FirebaseDatabase.getInstance().getReference().child("requests");
         mAdapter = new FirebaseRecyclerAdapter<Request, RequestHolder>(
-                Request.class, android.R.layout.item_requests, RequestHolder.class, requestsRef) {
+                Request.class, R.layout.item_requests, RequestHolder.class, requestsRef) {
             @Override
             public void populateViewHolder(RequestHolder requestViewHolder,
                                            Request request,
