@@ -27,6 +27,8 @@ import cc.time_share.android.location.GPSTracker;
 import cc.time_share.android.models.Request;
 import cc.time_share.android.server.ServerHandler;
 import cc.time_share.android.utilites.ComaTokenizer;
+import cc.time_share.android.utilites.GlobalSharedPreferences;
+import cc.time_share.android.utilites.SharedPrefKeys;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -130,10 +132,12 @@ public class CreateActivity extends AppCompatActivity {
         skillsNeeded.addAll(Arrays.asList(mSkillsEditText.getText().toString().split(", ")));
         GPSTracker gpsTracker = new GPSTracker(this);
         ServerHandler.getInstance().addRequest(
-                new Request("Gil", mTitleEditText.getText().toString(),
+                new Request(
+                        GlobalSharedPreferences.getInstance().getString(SharedPrefKeys.USER_NAME),
+                        mTitleEditText.getText().toString(),
                         mDescriptionEditText.getText().toString()
                         ,gpsTracker.getLongitude(),
-                        gpsTracker.getLatitude(), skillsNeeded, "djdjdj"));
+                        gpsTracker.getLatitude(), skillsNeeded));
         super.onBackPressed();
     }
 }

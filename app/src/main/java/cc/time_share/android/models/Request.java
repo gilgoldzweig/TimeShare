@@ -24,14 +24,13 @@ public class Request {
     public Request() {}
 
     public Request(String name, String title, String description, Double longitude, Double latitude,
-                   List<String> needs, String key) {
+                   List<String> needs) {
         this.name = name;
         this.title = title;
         this.description = description;
         this.longitude = longitude;
         this.latitude = latitude;
         this.needs = needs;
-        this.key = key;
     }
     //endregion Constructor
     //region getters
