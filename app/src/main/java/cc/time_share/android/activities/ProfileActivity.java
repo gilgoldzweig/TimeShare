@@ -1,19 +1,15 @@
 package cc.time_share.android.activities;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +31,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User mUser;
     private GPSTracker mGpsTracker;
-    private HashSet<String> mSkillsSet = new HashSet<>();
+    private ArrayList<String> mSkillsSet = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

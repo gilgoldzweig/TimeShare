@@ -11,6 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import cc.time_share.android.models.Request;
@@ -111,7 +112,7 @@ public class ServerHandler {
                 .putString(SharedPrefKeys.USER_PHONE, user.getPhoneNumber())
                 .putFloat(SharedPrefKeys.USER_LAT, user.getLatitude())
                 .putFloat(SharedPrefKeys.USER_LAT, user.getLatitude())
-                .putStringSet(SharedPrefKeys.USER_SKILLS, user.getSkills())
+                .putStringSet(SharedPrefKeys.USER_SKILLS, new HashSet<String>(user.getSkills()))
                 .apply();
     }
 
@@ -124,7 +125,7 @@ public class ServerHandler {
                 globalSharedPreferences.getString(SharedPrefKeys.USER_PHONE),
                 globalSharedPreferences.getFloat(SharedPrefKeys.USER_LAT),
                 globalSharedPreferences.getFloat(SharedPrefKeys.USER_LON),
-                globalSharedPreferences.getStringSet(SharedPrefKeys.USER_SKILLS),
+                new ArrayList<>(globalSharedPreferences.getStringSet(SharedPrefKeys.USER_SKILLS)),
                 null);
         user.setKey(globalSharedPreferences.getString(SharedPrefKeys.USER_KEY));
         return user;

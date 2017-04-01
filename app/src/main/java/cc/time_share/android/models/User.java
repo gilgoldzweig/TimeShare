@@ -2,7 +2,6 @@ package cc.time_share.android.models;
 
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
@@ -15,15 +14,14 @@ public class User {
     private String phoneNumber;
     private Float longitude;
     private Float latitude;
-    private Set<String> skills;
-    private List<String> skillsArray;
-    private Set<String> requestKeys;
+    private List<String> skills;
+    private List<String> requestKeys;
     //endregion Data Fields
     //region Constructor
     public User() {}
 
     public User(String name, String phoneNumber, Float longitude, Float latitude,
-                Set<String> skills, Set<String> requestKeys) {
+                List<String> skills, List<String> requestKeys) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.longitude = longitude;
@@ -55,17 +53,14 @@ public class User {
         return latitude;
     }
 
-    public Set<String> getSkills() {
+    public List<String> getSkills() {
         return skills;
     }
 
-    public Set<String> getRequestKeys() {
+    public List<String> getRequestKeys() {
         return requestKeys;
     }
 
-    public List<String> getSkillsArray() {
-        return skillsArray;
-    }
     //endregion getters
     //region setters
 
@@ -89,17 +84,14 @@ public class User {
         this.latitude = latitude;
     }
 
-    public void setSkills(Set<String> skills) {
+    public void setSkills(List<String> skills) {
         this.skills = skills;
     }
 
-    public void setRequestKeys(Set<String> requestKeys) {
+    public void setRequestKeys(List<String> requestKeys) {
         this.requestKeys = requestKeys;
     }
 
-    public void setSkillsArray(List<String> skillsArray) {
-        this.skillsArray = skillsArray;
-    }
     //endregion setters
 
     @Override
