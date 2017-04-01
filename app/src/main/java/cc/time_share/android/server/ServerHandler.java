@@ -1,8 +1,6 @@
 package cc.time_share.android.server;
 
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -15,16 +13,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import cc.time_share.android.models.Request;
 import cc.time_share.android.models.User;
 import cc.time_share.android.utilites.GlobalSharedPreferences;
-import io.kimo.lib.faker.Faker;
-import io.kimo.lib.faker.api.LoremAPI;
-import io.kimo.lib.faker.component.text.AddressComponent;
-import io.kimo.lib.faker.component.text.LoremComponent;
-import io.kimo.lib.faker.component.text.URLComponent;
+import cc.time_share.android.utilites.SharedPrefKeys;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
@@ -35,6 +28,7 @@ public class ServerHandler {
     private static final String TAG = ServerHandler.class.getSimpleName();
 
     private DatabaseReference mDatabase;
+    private GlobalSharedPreferences globalSharedPreferences;
 
     public static ServerHandler getInstance() {
         return ourInstance;
@@ -42,6 +36,7 @@ public class ServerHandler {
 
     private ServerHandler() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        globalSharedPreferences = GlobalSharedPreferences.getInstance();
     }
 
     public void pushDemoDataToServer() {
@@ -99,16 +94,41 @@ public class ServerHandler {
         mDatabase.child("requests").child(key).setValue(request);
     }
 
+    public void deleteRequest(String requestKey) {
+        mDatabase.child("requests").child(requestKey).setValue(null);
+    }
+
     public void addUser(User user) {
         String key =
-                GlobalSharedPreferences.getInstance().contains("userKey") ?
-                GlobalSharedPreferences.getInstance().getString("userKey") :
+                globalSharedPreferences.contains(SharedPrefKeys.USER_KEY) ?
+                globalSharedPreferences.getString(SharedPrefKeys.USER_KEY) :
                 mDatabase.child("users").push().getKey();
         user.setKey(key);
         mDatabase.child("users").child(key).setValue(user);
-        GlobalSharedPreferences.getInstance()
-                .put("userKey", key)
-                .put("userName", user.getName())
-                .commit();
+        Log.d(TAG, user.getSkills().toString());
+        globalSharedPreferences
+                .edit()
+                .putString(SharedPrefKeys.USER_KEY, key)
+                .putString(SharedPrefKeys.USER_NAME, user.getName())
+                .putString(SharedPrefKeys.USER_PHONE, user.getPhoneNumber())
+                .putFloat(SharedPrefKeys.USER_LAT, user.getLatitude())
+                .putFloat(SharedPrefKeys.USER_LAT, user.getLatitude())
+                .putStringSet(SharedPrefKeys.USER_SKILLS, new HashSet<String>(user.getSkills()))
+                .apply();
+    }
+
+    public User getUser() {
+        if (!globalSharedPreferences.contains(SharedPrefKeys.USER_KEY)) {
+            return null;
+        }
+        User user = new User(
+                globalSharedPreferences.getString(SharedPrefKeys.USER_NAME),
+                globalSharedPreferences.getString(SharedPrefKeys.USER_PHONE),
+                globalSharedPreferences.getFloat(SharedPrefKeys.USER_LAT),
+                globalSharedPreferences.getFloat(SharedPrefKeys.USER_LON),
+                new ArrayList<>(globalSharedPreferences.getStringSet(SharedPrefKeys.USER_SKILLS)),
+                null);
+        user.setKey(globalSharedPreferences.getString(SharedPrefKeys.USER_KEY));
+        return user;
     }
 }

@@ -2,7 +2,6 @@ package cc.time_share.android.models;
 
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
@@ -13,18 +12,18 @@ public class User {
     private String key;
     private String name;
     private String phoneNumber;
-    private Double longitude;
-    private Double latitude;
-    private Set<String> skills;
-    private List<String> skillsArray;
-    private Set<String> requestKeys;
+    private Float longitude;
+    private Float latitude;
+    private List<String> skills;
+    private List<String> requestKeys;
     //endregion Data Fields
     //region Constructor
     public User() {}
 
-    public User(String name, Double longitude, Double latitude, Set<String> skills,
-                Set<String> requestKeys) {
+    public User(String name, String phoneNumber, Float longitude, Float latitude,
+                List<String> skills, List<String> requestKeys) {
         this.name = name;
+        this.phoneNumber = phoneNumber;
         this.longitude = longitude;
         this.latitude = latitude;
         this.skills = skills;
@@ -42,29 +41,26 @@ public class User {
         return name;
     }
 
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public Set<String> getSkills() {
-        return skills;
-    }
-
-    public Set<String> getRequestKeys() {
-        return requestKeys;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public List<String> getSkillsArray() {
-        return skillsArray;
+    public Float getLongitude() {
+        return longitude;
     }
+
+    public Float getLatitude() {
+        return latitude;
+    }
+
+    public List<String> getSkills() {
+        return skills;
+    }
+
+    public List<String> getRequestKeys() {
+        return requestKeys;
+    }
+
     //endregion getters
     //region setters
 
@@ -76,29 +72,26 @@ public class User {
         this.name = name;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public void setSkills(Set<String> skills) {
-        this.skills = skills;
-    }
-
-    public void setRequestKeys(Set<String> requestKeys) {
-        this.requestKeys = requestKeys;
-    }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setSkillsArray(List<String> skillsArray) {
-        this.skillsArray = skillsArray;
+    public void setLongitude(Float longitude) {
+        this.longitude = longitude;
     }
+
+    public void setLatitude(Float latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setSkills(List<String> skills) {
+        this.skills = skills;
+    }
+
+    public void setRequestKeys(List<String> requestKeys) {
+        this.requestKeys = requestKeys;
+    }
+
     //endregion setters
 
     @Override

@@ -1,18 +1,20 @@
 package cc.time_share.android.activities;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
+import android.widget.ImageView;
 
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,10 @@ import cc.time_share.android.models.User;
 import cc.time_share.android.server.ServerHandler;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    @BindView(R.id.img_profile)
+    ImageView mProfilePicture;
+
     @BindView(R.id.edt_name)
     EditText mNameEditText;
 
@@ -34,14 +40,35 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User mUser;
     private GPSTracker mGpsTracker;
-    private List<String> mSkillsArray = new ArrayList<>();
-    private String[] mSkills;
+    private HashSet<String> mSkillsSet = new HashSet<>();
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         mGpsTracker = new GPSTracker(this);
+        configureChips();
+
+        User user = ServerHandler.getInstance().getUser();
+        if (user != null) {
+            mNameEditText.setText(user.getName());
+            mPhoneNumberEditText.setText(user.getPhoneNumber());
+
+            mSkillsSet.addAll(user.getSkills());
+            String[] allSkills = getResources().getStringArray(R.array.skills);
+            for (int i = 0; i < allSkills.length; i++)
+            {
+                if (mSkillsSet.contains(allSkills[i])) {
+                    mChipCloud.setSelectedChip(i);
+                }
+            }
+        }
+    }
+
+    private void configureChips() {
         new ChipCloud.Configure()
                 .chipCloud(mChipCloud)
                 .selectedColor(Color.parseColor("#ff00cc"))
@@ -60,26 +87,45 @@ public class ProfileActivity extends AppCompatActivity {
                 .chipListener(new ChipListener() {
                     @Override
                     public void chipSelected(int index) {
-                        mSkillsArray.add(getResources().getStringArray(R.array.skills)[index]);
+                        mSkillsSet.add(getResources().getStringArray(R.array.skills)[index]);
                         //...
                     }
                     @Override
                     public void chipDeselected(int index) {
-                        mSkillsArray.remove(getResources().getStringArray(R.array.skills)[index]);
+                        mSkillsSet.remove(getResources().getStringArray(R.array.skills)[index]);
                         //...
                     }
                 })
                 .build();
     }
+
     @OnClick(R.id.fab_save_profile)
     public void saveProfile(View v) {
-        mUser = new User();
-        mUser.setName(mNameEditText.getText().toString().trim());
-        mUser.setPhoneNumber(mPhoneNumberEditText.getText().toString().trim());
-        mUser.setLatitude(mGpsTracker.getLatitude());
-        mUser.setLongitude(mGpsTracker.getLongitude());
-        mUser.setSkillsArray(mSkillsArray);
+        mUser = new User(
+                mNameEditText.getText().toString().trim(),
+                mPhoneNumberEditText.getText().toString().trim(),
+                (float) mGpsTracker.getLatitude(),
+                (float) mGpsTracker.getLongitude(),
+                new ArrayList<>(mSkillsSet),
+                null);
         ServerHandler.getInstance().addUser(mUser);
-        finishActivity(0);
+        finish();
+    }
+
+    @OnClick(R.id.img_profile)
+    public void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mProfilePicture.setImageBitmap(imageBitmap);
+        }
     }
 }
