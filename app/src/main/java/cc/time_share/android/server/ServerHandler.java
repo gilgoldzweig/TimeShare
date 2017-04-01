@@ -105,6 +105,7 @@ public class ServerHandler {
                 mDatabase.child("users").push().getKey();
         user.setKey(key);
         mDatabase.child("users").child(key).setValue(user);
+        Log.d(TAG, user.getSkills().toString());
         globalSharedPreferences
                 .edit()
                 .putString(SharedPrefKeys.USER_KEY, key)

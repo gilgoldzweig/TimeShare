@@ -10,6 +10,7 @@ import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User mUser;
     private GPSTracker mGpsTracker;
-    private ArrayList<String> mSkillsSet = new ArrayList<>();
+    private HashSet<String> mSkillsSet = new HashSet<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,15 @@ public class ProfileActivity extends AppCompatActivity {
         if (user != null) {
             mNameEditText.setText(user.getName());
             mPhoneNumberEditText.setText(user.getPhoneNumber());
+
             mSkillsSet.addAll(user.getSkills());
-            // TODO(gil): How to make chips that are in mSkillsSet selected in the UI?
-            // Do we use mChipCloud.setSelectedChip()?
+            String[] allSkills = getResources().getStringArray(R.array.skills);
+            for (int i = 0; i < allSkills.length; i++)
+            {
+                if (mSkillsSet.contains(allSkills[i])) {
+                    mChipCloud.setSelectedChip(i);
+                }
+            }
         }
     }
 
@@ -88,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
                 mPhoneNumberEditText.getText().toString().trim(),
                 (float) mGpsTracker.getLatitude(),
                 (float) mGpsTracker.getLongitude(),
-                mSkillsSet,
+                new ArrayList<>(mSkillsSet),
                 null);
         ServerHandler.getInstance().addUser(mUser);
         finish();
