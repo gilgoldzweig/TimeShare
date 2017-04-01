@@ -1,10 +1,14 @@
 package cc.time_share.android.activities;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
@@ -21,6 +25,10 @@ import cc.time_share.android.models.User;
 import cc.time_share.android.server.ServerHandler;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    @BindView(R.id.img_profile)
+    ImageView mProfilePicture;
+
     @BindView(R.id.edt_name)
     EditText mNameEditText;
 
@@ -33,6 +41,9 @@ public class ProfileActivity extends AppCompatActivity {
     private User mUser;
     private GPSTracker mGpsTracker;
     private HashSet<String> mSkillsSet = new HashSet<>();
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,5 +110,22 @@ public class ProfileActivity extends AppCompatActivity {
                 null);
         ServerHandler.getInstance().addUser(mUser);
         finish();
+    }
+
+    @OnClick(R.id.img_profile)
+    public void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mProfilePicture.setImageBitmap(imageBitmap);
+        }
     }
 }
