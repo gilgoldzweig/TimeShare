@@ -1,31 +1,22 @@
 package cc.time_share.android.activities;
 
-import android.Manifest;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.text.style.BackgroundColorSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
-import com.squareup.haha.guava.collect.Collections2;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,9 +27,9 @@ import cc.time_share.android.location.GPSTracker;
 import cc.time_share.android.models.Request;
 import cc.time_share.android.server.ServerHandler;
 import cc.time_share.android.utilites.ComaTokenizer;
-import cc.time_share.android.utilites.CustomBackgroundSpan;
 
 public class CreateActivity extends AppCompatActivity {
+
     @BindView(R.id.toolbar_create)
     Toolbar mToolBar;
 
@@ -90,7 +81,7 @@ public class CreateActivity extends AppCompatActivity {
         });
         ArrayAdapter<String> auoCompleteAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item);
-        auoCompleteAdapter.addAll(skills());
+        auoCompleteAdapter.addAll(getResources().getStringArray(R.array.skills));
         spannableStringBuilder = new SpannableStringBuilder();
         mSkillsEditText.setAdapter(auoCompleteAdapter);
         mSkillsEditText.setTokenizer(new ComaTokenizer());
@@ -114,22 +105,6 @@ public class CreateActivity extends AppCompatActivity {
 //        });
     }
 
-    public List<String> skills() {
-        List<String> skills = new ArrayList<>();
-        skills.add("Arts");
-        skills.add("Design");
-        skills.add("Building");
-        skills.add("Rides");
-        skills.add("Coding");
-        skills.add("Language");
-        skills.add("Math");
-        skills.add("UX");
-        skills.add("UI");
-        skills.add("Cleaning");
-        skills.add("Cooking");
-        skills.add("Baking");
-        return skills;
-    }
     @OnClick(R.id.fab_create)
     public void createNewRequest(View v) {
         create();
@@ -149,6 +124,7 @@ public class CreateActivity extends AppCompatActivity {
         });
 
     }
+
     private void create() {
         List<String> skillsNeeded = new ArrayList<>();
         skillsNeeded.addAll(Arrays.asList(mSkillsEditText.getText().toString().split(", ")));
@@ -159,6 +135,5 @@ public class CreateActivity extends AppCompatActivity {
                         ,gpsTracker.getLongitude(),
                         gpsTracker.getLatitude(), skillsNeeded, "djdjdj"));
         super.onBackPressed();
-
     }
 }
