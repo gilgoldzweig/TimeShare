@@ -5,10 +5,13 @@ import static android.Manifest.permission.*;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +23,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -42,11 +47,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.time_share.android.R;
+import cc.time_share.android.models.Transaction;
 import cc.time_share.android.view_holders.RequestHolder;
 import cc.time_share.android.location.GPSTracker;
 import cc.time_share.android.models.Request;
 import cc.time_share.android.server.ServerHandler;
 import cc.time_share.android.utilites.GlobalSharedPreferences;
+import cc.time_share.android.view_holders.TransactionViewHolder;
+import io.kimo.lib.faker.component.text.URLComponent;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -65,21 +73,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final int PERMISSION_KEY = 999999999;
     private final String[] permissions = new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
     private GPSTracker mGPSTracker;
-    private FirebaseRecyclerAdapter<Request, RequestHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Request, TransactionViewHolder> mAdapter;
     private HashMap<String, Marker> mMarkers = new HashMap<>();
+    private URLComponent urlComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        startActivity(new Intent(this, HomeActivity.class));
         mToolBar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mToolBar);
         mMapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.mapFragmentView);
         mServerHandler = ServerHandler.getInstance();
-
+        urlComponent = new URLComponent(this);
         subscribeListToRequests();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -107,20 +115,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         DatabaseReference requestsRef =
                 FirebaseDatabase.getInstance().getReference().child("requests");
 
-        mAdapter = new FirebaseRecyclerAdapter<Request, RequestHolder>(
-                Request.class, R.layout.item_requests, RequestHolder.class, requestsRef) {
+        mAdapter = new FirebaseRecyclerAdapter<Request, TransactionViewHolder>(
+                Request.class, R.layout.item_request, TransactionViewHolder.class, requestsRef) {
             @Override
-            public void populateViewHolder(RequestHolder requestViewHolder,
-                                           Request request,
-                                           int position) {
+            protected void populateViewHolder(final TransactionViewHolder viewHolder, Request model, int position) {
+                Glide.with(MainActivity.this).load(urlComponent.avatar())
+                        .asBitmap().centerCrop()
+                        .into(new BitmapImageViewTarget(viewHolder.mProfileImage) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(getResources(), resource);
+                                circularBitmapDrawable.setCircular(true);
+                                viewHolder.mProfileImage.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
+                viewHolder.mCreatorName.setText(model.getName());
+                viewHolder.mTranactionCreatingTime.setText("20 Minutes ago");
+                viewHolder.mDescription.setText(model.getDescription());
 
-                requestViewHolder.mNameText.setText(request.getName());
-                requestViewHolder.mTitleText.setText(request.getTitle());
-                requestViewHolder.mDescriptionText.setText(request.getDescription());
-                requestViewHolder.mSkillsText.setText(StringUtils.join(request.getNeeds(), ", "));
             }
         };
-
         mRequestsRecyclerView.setHasFixedSize(false);
         mRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRequestsRecyclerView.setAdapter(mAdapter);

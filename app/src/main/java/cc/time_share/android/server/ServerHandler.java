@@ -1,6 +1,7 @@
 package cc.time_share.android.server;
 
 
+import android.content.Context;
 import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
@@ -15,9 +16,12 @@ import java.util.HashSet;
 import java.util.List;
 
 import cc.time_share.android.models.Request;
+import cc.time_share.android.models.Transaction;
 import cc.time_share.android.models.User;
 import cc.time_share.android.utilites.GlobalSharedPreferences;
 import cc.time_share.android.utilites.SharedPrefKeys;
+import io.kimo.lib.faker.component.text.NameComponent;
+import io.kimo.lib.faker.component.text.URLComponent;
 
 /**
  * Created by gilgoldzweig on 30/03/2017.
@@ -93,7 +97,6 @@ public class ServerHandler {
         request.setKey(key);
         mDatabase.child("requests").child(key).setValue(request);
     }
-
     public void deleteRequest(String requestKey) {
         mDatabase.child("requests").child(requestKey).setValue(null);
     }

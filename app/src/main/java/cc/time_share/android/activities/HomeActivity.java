@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity {
     @BindView(R.id.fab_create_new)
     FloatingActionButton mCreateFab;
     private RecyclerViewFragment mNeedHelpFragment, mReceiveHelpFragment;
+    private com.google.android.gms.maps.MapFragment mMapFragment;
     private FirebaseRecyclerAdapter<Transaction, RequestHolder> mAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
         mToolBar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
         mNeedHelpFragment = new RecyclerViewFragment();
         mReceiveHelpFragment = new RecyclerViewFragment();
+        setEasyTabs();
 
 
     }
@@ -53,9 +56,8 @@ public class HomeActivity extends AppCompatActivity {
                 .setTabsBackgroundColor(getResources().getColor(R.color.primary))
                 .setTextColors(EasyTabsColors.White, EasyTabsColors.White)
                 .setIndicatorColor(getResources().getColor(R.color.accent))
-                .addTabs(new TabItem(mReceiveHelpFragment, "get"),
-                        new TabItem(mNeedHelpFragment, "give"))
-                .addIcons(R.drawable.ic_get_help_white_24dp, R.drawable.ic_give_help_white_24dp)
+                .addTabs(new TabItem(mNeedHelpFragment, "give"))
+                .addIcons(R.drawable.ic_give_help_white_24dp, R.drawable.ic_map_white_24dp)
                 .setIconFading(true)
                 .Build();
         mEasyTabs.getTabLayout().setElevation(Utils.dpToPx(4));

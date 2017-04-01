@@ -16,8 +16,6 @@ import cc.time_share.android.R;
 
 public class TransactionViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.img_cover)
-    public ImageView mCoverImage;
     @BindView(R.id.img_creator_profile)
     public ImageView mProfileImage;
     @BindView(R.id.txt_creator_name)
