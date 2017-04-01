@@ -12,6 +12,7 @@ public class GlobalSharedPreferences implements SharedPreferences {
     private static final String TAG = GlobalSharedPreferences.class.getSimpleName();
 
     private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
 
     //region singleton
@@ -27,6 +28,7 @@ public class GlobalSharedPreferences implements SharedPreferences {
     public void initialize(Context context) {
         if(!initialized) {
             sharedPreferences = context.getSharedPreferences(SharedPrefKeys.FILE_KEY, Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
             initialized = true;
         }
     }
@@ -103,7 +105,7 @@ public class GlobalSharedPreferences implements SharedPreferences {
     //endregion override
     //region put
     public GlobalSharedPreferences put(String key, String value) {
-        edit().putString(key, value);
+       editor.putString(key, value);
         return instance;
     }
     public GlobalSharedPreferences put(String key, int value) {

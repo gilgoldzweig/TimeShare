@@ -1,4 +1,4 @@
-package cc.time_share.android.adapters;
+package cc.time_share.android.view_holders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

@@ -33,7 +33,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.haha.guava.base.Joiner;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cc.time_share.android.R;
-import cc.time_share.android.adapters.RequestHolder;
+import cc.time_share.android.view_holders.RequestHolder;
 import cc.time_share.android.location.GPSTracker;
 import cc.time_share.android.models.Request;
 import cc.time_share.android.server.ServerHandler;
@@ -120,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 requestViewHolder.mDescriptionText.setText(request.getDescription());
                 requestViewHolder.mSkillsText.setText(StringUtils.join(request.getNeeds(), ", "));
             }
-
         };
 
         mRequestsRecyclerView.setHasFixedSize(false);
